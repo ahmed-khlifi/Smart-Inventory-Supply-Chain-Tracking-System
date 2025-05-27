@@ -6,24 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Shipment {
+public class ShipmentItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String supplierName;
-    private LocalDate expectedArrival;
-    private ShipmentStatus status;
+    @ManyToOne
+    private Product product;
 
-    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ShipmentItem> items;
+    private int quantity;
+
+    @ManyToOne
+    private Shipment shipment;
 }
