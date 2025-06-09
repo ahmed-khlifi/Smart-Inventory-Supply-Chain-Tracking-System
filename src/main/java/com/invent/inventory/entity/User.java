@@ -1,13 +1,8 @@
 package com.invent.inventory.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
@@ -20,7 +15,11 @@ public class User {
     private Long id;
 
     private String username;
+
+    @ToString.Exclude
+    @JsonIgnore
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
 }

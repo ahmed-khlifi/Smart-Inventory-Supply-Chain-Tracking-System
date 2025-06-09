@@ -21,6 +21,8 @@ public class Shipment {
 
     private String supplierName;
     private LocalDate expectedArrival;
+
+    @Enumerated(EnumType.STRING)
     private ShipmentStatus status;
 
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, orphanRemoval = true)

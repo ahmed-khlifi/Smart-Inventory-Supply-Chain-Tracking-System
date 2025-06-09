@@ -21,7 +21,7 @@ public class Warehouse {
     private String name;
     private String location;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
 }
