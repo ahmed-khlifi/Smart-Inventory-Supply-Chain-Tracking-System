@@ -1,4 +1,7 @@
 package com.invent.inventory.repository;
 
-public class ShipmentRepository {
+import com.invent.inventory.entity.Shipment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
 }
