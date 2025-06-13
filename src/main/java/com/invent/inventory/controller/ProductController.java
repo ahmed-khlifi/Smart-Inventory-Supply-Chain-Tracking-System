@@ -30,7 +30,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product updated) {
         return service.findById(id).map(p -> {
-            updated.setId(Math.toIntExact(id));
+            updated.setId(id);
             return ResponseEntity.ok(service.save(updated));
         }).orElse(ResponseEntity.notFound().build());
     }
