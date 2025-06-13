@@ -3,6 +3,7 @@ package com.invent.inventory.controller;
 import com.invent.inventory.entity.Product;
 import com.invent.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,34 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    // ——— Paginated list ———
     @GetMapping
-    public List<Product> getAll() { return service.findAll(); }
+    public Page<Product> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return service.list(page, size);
+    }
+
+    // ——— Low-stock summary ———
+    @GetMapping("/low-stock")
+    public List<Product> lowStock() {
+        return service.findLowStock();
+    }
+
+    // ——— Transfer stock ———
+    @PostMapping("/{id}/transfer")
+    public ResponseEntity<?> transfer(
+            @PathVariable Long id,
+            @RequestParam Long toWarehouse,
+            @RequestParam int qty) {
+        service.transferStock(id, toWarehouse, qty);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public List<Product> getAll() {
+        return service.findAll();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable Long id) {
@@ -25,7 +52,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product create(@RequestBody Product product) { return service.save(product); }
+    public Product create(@RequestBody Product product) {
+        return service.save(product);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product updated) {
