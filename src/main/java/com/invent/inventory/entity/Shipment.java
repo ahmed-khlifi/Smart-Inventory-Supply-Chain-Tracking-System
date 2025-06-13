@@ -27,4 +27,8 @@ public class Shipment {
 
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShipmentItem> items;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
 }
