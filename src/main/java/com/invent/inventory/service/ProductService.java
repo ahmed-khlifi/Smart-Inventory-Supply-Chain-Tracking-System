@@ -79,4 +79,16 @@ public class ProductService implements IProductService {
         target.setQuantity(target.getQuantity() + qty);
         repo.save(target);
     }
+
+    @Override
+    public void incrementStock(Long productId, Long warehouseId, int qty) {
+        Product p = repo.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        // if you track warehouse per product:
+        if (!p.getWarehouse().getId().equals(warehouseId)) {
+            throw new IllegalArgumentException("Product does not belong to warehouse");
+        }
+        p.setQuantity(p.getQuantity() + qty);
+        repo.save(p);
+    }
 }

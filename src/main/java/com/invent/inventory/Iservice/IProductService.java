@@ -21,4 +21,7 @@ public interface IProductService {
     List<Product> findLowStock();
 
     void transferStock(Long productId, Long toWarehouseId, int qty);
+
+    void incrementStock(Long productId, Long warehouseId, int qty);
+
 }
