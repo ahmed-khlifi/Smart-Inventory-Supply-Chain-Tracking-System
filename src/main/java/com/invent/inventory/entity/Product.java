@@ -1,5 +1,7 @@
 package com.invent.inventory.entity;
 
+import org.hibernate.envers.Audited;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Audited
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

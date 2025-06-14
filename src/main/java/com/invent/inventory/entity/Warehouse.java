@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Audited
 public class Warehouse {
 
     @Id
