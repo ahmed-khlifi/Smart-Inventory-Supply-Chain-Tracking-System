@@ -1,5 +1,7 @@
 package com.invent.inventory.entity;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,5 +23,10 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Builder.Default
+    private boolean active = true;
+
+    private LocalDateTime lastLogin;
 
 }
