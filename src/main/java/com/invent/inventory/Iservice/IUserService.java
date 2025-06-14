@@ -3,12 +3,17 @@ package com.invent.inventory.Iservice;
 import com.invent.inventory.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IUserService {
-    List<User> findAll();
-    Optional<User> findById(Long id);
-    User save(User user);
-    void deleteById(Long id);
-    Optional<User> findByUsername(String username);
+    List<User> listAll();
+
+    User getById(Long id);
+
+    User create(User user);
+
+    User update(Long id, User user);
+
+    void deactivate(Long id);
+
+    void resetPassword(Long id, String rawPassword);
 }

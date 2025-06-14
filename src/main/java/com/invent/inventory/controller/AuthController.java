@@ -6,6 +6,8 @@ import com.invent.inventory.payload.LoginRequest;
 import com.invent.inventory.payload.RegisterRequest;
 import com.invent.inventory.repository.UserRepository;
 import com.invent.inventory.security.JwtUtil;
+import com.invent.inventory.security.UserDetailsImpl;
+import com.invent.inventory.service.UserDetailsServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -40,13 +42,21 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         try {
-            authManager.authenticate(
+            Authentication auth = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
             String token = jwtUtil.generateToken(req.getUsername());
             User user = userRepository.findByUsername(req.getUsername()).orElse(null);
             if (user == null) {
-                return ResponseEntity.badRequest().body("User not found");
+                return ResponseEntity.badRequest().body(
+                        new ErrorResponseDto("User not found", "No user found with the provided username"));
             }
+
+            UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+            User u = userDetails.getUser();
+            // Update last login time
+            u.setLastLogin(java.time.LocalDateTime.now());
+            userRepository.save(u);
+
             return ResponseEntity.ok(
                     java.util.Map.of(
                             "username", user.getUsername(),
