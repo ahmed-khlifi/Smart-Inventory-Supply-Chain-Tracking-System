@@ -12,8 +12,7 @@ public class EmailService implements IEmailService {
     private final JavaMailSender mailSender;
     private final String recipient;
 
-    public EmailService(JavaMailSender mailSender,
-            @Value("${inventory.alert.recipient}") String recipient) {
+    public EmailService(JavaMailSender mailSender, @Value("${inventory.alert.recipient}") String recipient) {
         this.mailSender = mailSender;
         this.recipient = recipient;
     }

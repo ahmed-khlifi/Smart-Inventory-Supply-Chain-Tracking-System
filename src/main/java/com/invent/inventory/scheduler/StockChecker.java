@@ -1,7 +1,7 @@
 package com.invent.inventory.scheduler;
 
-import com.invent.inventory.Iservice.IEmailService;
 import com.invent.inventory.entity.Product;
+import com.invent.inventory.service.EmailService;
 import com.invent.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +15,7 @@ public class StockChecker {
     @Autowired
     private ProductService service;
     @Autowired
-    private IEmailService emailService;
+    private EmailService emailService;
 
     @Scheduled(cron = "0 0 9 * * *") // Every day at 9 AM
     public void checkStockLevels() {
